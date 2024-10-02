@@ -1,0 +1,36 @@
+services:
+  controller:
+    image: alpine:latest
+    container_name: lab_controller
+
+    networks:
+      - main
+
+    volumes:
+      - ./resolv.conf:/etc/resolv.conf 
+
+    command: /bin/sh
+    stdin_open: true
+    tty: true
+
+  bind:
+    image: internetsystemsconsortium/bind9:9.18
+    container_name: lab_tld
+    # ports:
+      # - "53:53/udp"
+      # - "53:53/tcp"
+    volumes:
+      - ./lab/named.conf:/etc/bind/named.conf
+      - ./lab/zones:/etc/bind/zones
+    # restart: unless-stopped
+    platform: linux/x86_64
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.200.0/24
