@@ -1,10 +1,11 @@
 services:
   controller:
     image: alpine:latest
-    container_name: lab_controller
+    container_name: controller
 
     networks:
-      - main
+      main:
+        ipv4_address: 192.168.200.10
 
     volumes:
       - ./resolv.conf:/etc/resolv.conf 
@@ -13,23 +14,31 @@ services:
     stdin_open: true
     tty: true
 
-  bind:
+  dns_lab:
     image: internetsystemsconsortium/bind9:9.18
-    container_name: lab_tld
-    # ports:
-      # - "53:53/udp"
-      # - "53:53/tcp"
+    container_name: dns_lab
     volumes:
       - ./lab/named.conf:/etc/bind/named.conf
       - ./lab/zones:/etc/bind/zones
-    # restart: unless-stopped
     platform: linux/x86_64
     networks:
-      - main
+      main:
+        ipv4_address: 192.168.200.100
+
+  dns_lab_happy:
+    image: internetsystemsconsortium/bind9:9.18
+    container_name: dns_lab_happy
+    volumes:
+      - ./happy.lab/named.conf:/etc/bind/named.conf
+      - ./happy.lab/zones:/etc/bind/zones
+    platform: linux/x86_64
+    networks:
+      main:
+        ipv4_address: 192.168.200.101
 
   dovecot:
     image: dovecot/dovecot
-    container_name: lab_dovecot
+    container_name: mail
     networks:
       - main
 

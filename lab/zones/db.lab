@@ -8,5 +8,9 @@ $TTL 86400
 )
     IN  NS  ns1.lab.
 
-ns1 IN  A   192.168.200.2
-*.lab.  IN  A   192.168.200.2
+ns1 IN  A   192.168.200.100
+*.lab.  IN  A   192.168.200.240
+
+; happy.labのNSレコードを設定
+happy.lab.  IN  NS  ns.happy.lab.
+ns.happy.lab.  IN  A   192.168.200.101  ; 新しいDNSサーバーのIPアドレス

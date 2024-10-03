@@ -1,0 +1,18 @@
+$TTL 86400
+@   IN  SOA ns.happy.lab. admin.happy.lab. (
+        2023100201 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        1209600    ; Expire
+        86400      ; Minimum TTL
+)
+    IN  NS  ns.happy.lab.
+
+ns.happy.lab. IN  A 192.168.200.100
+
+; Aレコード (www.happy.lab)
+www  IN  A 192.168.200.4  ; www.happy.labのIPアドレス
+
+; MXレコード
+@   IN  MX 10 mail.happy.lab.
+mail IN  A 192.168.200.5  ; メールサーバーのIPアドレス

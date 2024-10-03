@@ -1,5 +1,5 @@
 docker compose up -d
 
-docker attach lab_controller
+docker attach controller
 
 docker compose down
